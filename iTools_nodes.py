@@ -368,7 +368,7 @@ class IToolsPromptStylerExtra:
             "required": {
                 "text_positive": ("STRING", {"default": "", "multiline": True}),
                 "text_negative": ("STRING", {"default": "", "multiline": False}),
-                "base_file": ((styles), {"default": "artist.yaml"}),
+                "base_file": ((styles), {"default": "subject.yaml"}),
                 "base_style": ((templates_basic),),
                 "second_file": ((styles), {"default": "clothing.yaml"}),
                 "second_style": ((templates_extra1),),
