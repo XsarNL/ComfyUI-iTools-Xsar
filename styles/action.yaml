@@ -23,6 +23,9 @@
   negative_prompt: noisy, blurry, amateurish, sloppy, unattractive
   prompt: Advertising poster style of {prompt}. Professional, modern, product-focused,
     commercial, eye-catching, highly detailed
+  loras:
+    - location: 
+      strength: 1.0
 
 - name: ads-automotive
   negative_prompt: noisy, blurry, unattractive, sloppy, unprofessional
