@@ -38,34 +38,43 @@ app.registerExtension({
         this.setDirtyCanvas(true, true);
       };
 
-      const second_file = this.widgets.find((w) => w.name == "second_file");
-      second_file.callback = async () => {
+      const expression_file = this.widgets.find((w) => w.name == "expression_file");
+      expression_file.callback = async () => {
         this.widgets[5]["value"] = "loading ...";
-        const options = await send_request_templates_for_file(second_file.value);
+        const options = await send_request_templates_for_file(expression_file.value);
         this.widgets[5]["options"]["values"] = options.templates;
         this.widgets[5]["value"] = options.templates[0];
         this.setDirtyCanvas(true, true);
       };
 
-      const third_file = this.widgets.find((w) => w.name == "third_file");
-      third_file.callback = async () => {
+      const second_file = this.widgets.find((w) => w.name == "second_file");
+      second_file.callback = async () => {
         this.widgets[7]["value"] = "loading ...";
-        const options = await send_request_templates_for_file(third_file.value);
+        const options = await send_request_templates_for_file(second_file.value);
         this.widgets[7]["options"]["values"] = options.templates;
         this.widgets[7]["value"] = options.templates[0];
         this.setDirtyCanvas(true, true);
       };
 
-      const fourth_file = this.widgets.find((w) => w.name == "fourth_file");
-      fourth_file.callback = async () => {
+      const third_file = this.widgets.find((w) => w.name == "third_file");
+      third_file.callback = async () => {
         this.widgets[9]["value"] = "loading ...";
-        const options = await send_request_templates_for_file(fourth_file.value);
+        const options = await send_request_templates_for_file(third_file.value);
         this.widgets[9]["options"]["values"] = options.templates;
         this.widgets[9]["value"] = options.templates[0];
         this.setDirtyCanvas(true, true);
       };
 
-      fix_start_up_init(this, base_file, second_file, third_file, fourth_file);
+      const fourth_file = this.widgets.find((w) => w.name == "fourth_file");
+      fourth_file.callback = async () => {
+        this.widgets[11]["value"] = "loading ...";
+        const options = await send_request_templates_for_file(fourth_file.value);
+        this.widgets[11]["options"]["values"] = options.templates;
+        this.widgets[11]["value"] = options.templates[0];
+        this.setDirtyCanvas(true, true);
+      };
+
+      fix_start_up_init(this, base_file, expression_file, second_file, third_file, fourth_file);
       this.addWidget("button", "reset all", null, () => {
         reset_func(this, fourth_file);
       });
@@ -83,29 +92,34 @@ async function reset_func(node, fourth_file) {
   node.widgets[2]["value"] = "subject.yaml";
   node.widgets[3]["value"] = "none";
 
-  node.widgets[4]["value"] = "clothing.yaml";
+  node.widgets[4]["value"] = "expression.yaml";
   node.widgets[5]["value"] = "none";
 
-  node.widgets[6]["value"] = "action.yaml";
+  node.widgets[6]["value"] = "clothing.yaml";
   node.widgets[7]["value"] = "none";
 
-  node.widgets[8]["value"] = "camera.yaml";
+  node.widgets[8]["value"] = "action.yaml";
   node.widgets[9]["value"] = "none";
 
+  node.widgets[10]["value"] = "camera.yaml";
+  node.widgets[11]["value"] = "none";
+
   const options = await send_request_templates_for_file("subject.yaml");
+  const options_expression = await send_request_templates_for_file("expression.yaml");
   const options2 = await send_request_templates_for_file("clothing.yaml");
   const options3 = await send_request_templates_for_file("action.yaml");
   const options4 = await send_request_templates_for_file("camera.yaml");
 
   node.widgets[3]["options"]["values"] = options.templates;
-  node.widgets[5]["options"]["values"] = options2.templates;
-  node.widgets[7]["options"]["values"] = options3.templates;
-  node.widgets[9]["options"]["values"] = options4.templates;
+  node.widgets[5]["options"]["values"] = options_expression.templates;
+  node.widgets[7]["options"]["values"] = options2.templates;
+  node.widgets[9]["options"]["values"] = options3.templates;
+  node.widgets[11]["options"]["values"] = options4.templates;
 
   this.setDirtyCanvas(true, true);
 }
 
-async function fix_start_up_init(node, base, s1, s2, s3) {
+async function fix_start_up_init(node, base, expr, s1, s2, s3) {
   try {
     // Wait until node and style are fully initialized
     if (!(await waitForInitialization(node, s3))) {
@@ -120,14 +134,17 @@ async function fix_start_up_init(node, base, s1, s2, s3) {
     const options = await send_request_templates_for_file(base.value);
     node.widgets[3]["options"]["values"] = options?.templates ?? [];
 
+    const options_expr = await send_request_templates_for_file(expr.value);
+    node.widgets[5]["options"]["values"] = options_expr?.templates ?? [];
+
     const options2 = await send_request_templates_for_file(s1.value);
-    node.widgets[5]["options"]["values"] = options2?.templates ?? [];
+    node.widgets[7]["options"]["values"] = options2?.templates ?? [];
 
     const options3 = await send_request_templates_for_file(s2.value);
-    node.widgets[7]["options"]["values"] = options3?.templates ?? [];
+    node.widgets[9]["options"]["values"] = options3?.templates ?? [];
 
     const options4 = await send_request_templates_for_file(s3.value);
-    node.widgets[9]["options"]["values"] = options4?.templates ?? [];
+    node.widgets[11]["options"]["values"] = options4?.templates ?? [];
   } catch (error) {
     if (allow_debug) console.log("Error in fix_start_up_init:", error);
   }
