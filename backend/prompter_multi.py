@@ -140,8 +140,11 @@ def combine_multi(
         if 'path' in lora:
             lora_dict[lora['path']] = lora
 
-    # Convert back to a list
-    final_loras = list(lora_dict.values())
+    # Convert to list of tuples: (path, strength_model, strength_clip)
+    final_loras = []
+    for lora in lora_dict.values():
+        strength = lora.get("strength", 1.0)
+        final_loras.append((lora["path"], strength, strength))
 
     return clean_text(total_p), clean_text(total_n), _templates, final_loras
 
