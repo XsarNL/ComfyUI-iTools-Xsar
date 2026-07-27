@@ -149,7 +149,7 @@ def get_yaml_names(_folder_path):
     return names
 
 
-possible_names = ["comfyui-itools", "ComfyUI-iTools"]
+possible_names = ["comfyui-itools", "ComfyUI-iTools", "ComfyUI-iTools-Xsar"]
 
 
 def check_detect_project_dir():
