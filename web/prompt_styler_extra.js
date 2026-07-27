@@ -80,22 +80,22 @@ async function reset_func(node, fourth_file) {
   }
   await waitForInitialization(node, fourth_file);
 
-  node.widgets[2]["value"] = "basic.yaml";
+  node.widgets[2]["value"] = "subject.yaml";
   node.widgets[3]["value"] = "none";
 
-  node.widgets[4]["value"] = "camera.yaml";
+  node.widgets[4]["value"] = "clothing.yaml";
   node.widgets[5]["value"] = "none";
 
-  node.widgets[6]["value"] = "artist.yaml";
+  node.widgets[6]["value"] = "action.yaml";
   node.widgets[7]["value"] = "none";
 
-  node.widgets[8]["value"] = "mood.yaml";
+  node.widgets[8]["value"] = "camera.yaml";
   node.widgets[9]["value"] = "none";
 
-  const options = await send_request_templates_for_file("basic.yaml");
-  const options2 = await send_request_templates_for_file("camera.yaml");
-  const options3 = await send_request_templates_for_file("artist.yaml");
-  const options4 = await send_request_templates_for_file("mood.yaml");
+  const options = await send_request_templates_for_file("subject.yaml");
+  const options2 = await send_request_templates_for_file("clothing.yaml");
+  const options3 = await send_request_templates_for_file("action.yaml");
+  const options4 = await send_request_templates_for_file("camera.yaml");
 
   node.widgets[3]["options"]["values"] = options.templates;
   node.widgets[5]["options"]["values"] = options2.templates;
