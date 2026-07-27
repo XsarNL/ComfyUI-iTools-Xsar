@@ -21,36 +21,36 @@
 
 - name: alexandra
   negative_prompt: ''
-  prompt: 'A photo of a woman resembling Alexandra, an Italian woman of Caucasian ethnicity with brown eye color and brown hair.'
+  prompt: A photo of a woman resembling Alexandra, an Italian woman of Caucasian ethnicity with brown eye color and brown hair.
   loras:
-    - path: 'Krea2/subject/alexandra_v1.safetensors'
-      strength: '1.0'
-    - path: 'Krea2/subject/realism_slider.safetensors'
-      strength: '-1.0'
+    - path: Krea2/subject/alexandra_v1.safetensors
+      strength: 1.0
+    - path: Krea2/subject/realism_slider.safetensors
+      strength: -1.0
 
 - name: alison
   negative_prompt: ''
-  prompt: 'A photo of a woman resembling Alison, an American woman of Caucasian ethnicity with blue eye color and auburn hair.'
+  prompt: A photo of a woman resembling Alison, an American woman of Caucasian ethnicity with blue eye color and auburn hair.
   loras:
-    - path: 'Krea2/subject/alison_v1.safetensors'
-      strength: '1.0'
-    - path: 'Krea2/subject/realism_slider.safetensors'
-      strength: '1.0'
+    - path: Krea2/subject/alison_v1.safetensors
+      strength: 1.0
+    - path: Krea2/subject/realism_slider.safetensors
+      strength: 1.0
 
 - name: alyson
   negative_prompt: ''
-  prompt: 'A photo of a woman named Alyson, an Australian woman of Aboriginal ethnicity with brown eyes and blonde dyed hair.'
+  prompt: A photo of a woman named Alyson, an Australian woman of Aboriginal ethnicity with brown eyes and blonde dyed hair.
   loras:
-    - path: 'Krea2/subject/alyson_v1.safetensors'
-      strength: '1.0'
-    - path: 'Krea2/subject/realism_slider.safetensors'
-      strength: '-2.5'
+    - path: Krea2/subject/alyson_v1.safetensors
+      strength: 1.0
+    - path: Krea2/subject/realism_slider.safetensors
+      strength: -2.5
 
 - name: angelina
   negative_prompt: ''
-  prompt: 'A photo of a woman resembling Angelina, an Colombian woman of Latin ethnicity with green eye color and black hair.'
+  prompt: A photo of a woman resembling Angelina, an Colombian woman of Latin ethnicity with green eye color and black hair.
   loras:
-    - path: 'Krea2/subject/angelina_v1.safetensors'
-      strength: '1.0'
-    - path: 'Krea2/subject/realism_slider.safetensors'
-      strength: '3.0'  
+    - path: Krea2/subject/angelina_v1.safetensors
+      strength: 1.0
+    - path: Krea2/subject/realism_slider.safetensors
+      strength: 3.0
