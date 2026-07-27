@@ -408,8 +408,9 @@ class IToolsPromptStylerExtra:
         "STRING",
         "STRING",
         "STRING",
+        "LORA_STACK",
     )
-    RETURN_NAMES = ("positive_prompt", "negative_prompt", "used_templates")
+    RETURN_NAMES = ("positive_prompt", "negative_prompt", "used_templates", "lora_stack")
     FUNCTION = "prompt_styler_extra"
     CATEGORY = "iTools"
     DESCRIPTION = "Helps you quickly populate your prompt using templates from up to 4 YAML files."
@@ -427,7 +428,7 @@ class IToolsPromptStylerExtra:
         fourth_file,
         fourth_style,
     ):
-        positive_prompt, negative_prompt, _templates = combine_multi(
+        positive_prompt, negative_prompt, _templates, lora_stack = combine_multi(
             text_positive,
             text_negative,
             base_file,
@@ -439,7 +440,7 @@ class IToolsPromptStylerExtra:
             fourth_file,
             fourth_style,
         )
-        return positive_prompt, negative_prompt, _templates
+        return positive_prompt, negative_prompt, _templates, lora_stack
 
 
 class IToolsGridFiller:

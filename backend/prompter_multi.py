@@ -28,14 +28,17 @@ templates_extra3 = read_styles(yaml_data_extra3)
 def get_template_value_from_yaml_file(file_name, template_name):
     positive_prompt = ""
     negative_prompt = ""
+    loras = []
     file_path = os.path.join(project_dir, "styles", file_name)
-    file_path2 = os.path.join(project_dir, "styles","more examples", file_name)
+    file_path2 = os.path.join(project_dir, "styles", "more examples", file_name)
     _yaml_data = load_yaml_data(file_path) or load_yaml_data(file_path2)
-
 
     if template_name == "random":
         # Pick a random template
-        available_templates = [t['name'] for t in _yaml_data if 'name' in t and 'prompt' in t and t['name'] != "random" and t['name'] != "none"]
+        available_templates = [
+            t['name'] for t in _yaml_data 
+            if 'name' in t and 'prompt' in t and t['name'] != "random" and t['name'] != "none"
+        ]
         if not available_templates:
             raise ValueError("No valid templates found in the YAML file.")
         template_name = random.choice(available_templates)
@@ -60,7 +63,12 @@ def get_template_value_from_yaml_file(file_name, template_name):
                 yaml_negative_prompt = template.get('negative_prompt', "")
                 if yaml_negative_prompt:
                     negative_prompt = yaml_negative_prompt
-                return positive_prompt, negative_prompt, template_name
+
+                # Extract LoRAs if they exist
+                if 'loras' in template:
+                    loras = template['loras']
+
+                return positive_prompt, negative_prompt, template_name, loras
 
         # If no matching template is found, raise an error
         raise ValueError(f"No template found with name '{template_name}'.")
@@ -71,12 +79,14 @@ def get_template_value_from_yaml_file(file_name, template_name):
         raise RuntimeError(f"An unexpected error occurred: {str(e)}")
 
 
-def combine_multi(text_positive, text_negative,
-                  base_file, base_style,
-                  second_file, second_style,
-                  third_file, third_style,
-                  fourth_file, fourth_style):
-    base_p, base_n, base_t = get_template_value_from_yaml_file(base_file, base_style)
+def combine_multi(
+    text_positive, text_negative,
+    base_file, base_style,
+    second_file, second_style,
+    third_file, third_style,
+    fourth_file, fourth_style
+):
+    base_p, base_n, base_t, base_loras = get_template_value_from_yaml_file(base_file, base_style)
     if "{prompt}" in base_p:
         base_p = base_p.replace("{prompt}", text_positive)
     else:
@@ -91,9 +101,9 @@ def combine_multi(text_positive, text_negative,
         prepend_neg = True
 
     # Secondary templates
-    s2_p, s2_n, s2_t = get_template_value_from_yaml_file(second_file, second_style)
-    s3_p, s3_n, s3_t = get_template_value_from_yaml_file(third_file, third_style)
-    s4_p, s4_n, s4_t = get_template_value_from_yaml_file(fourth_file, fourth_style)
+    s2_p, s2_n, s2_t, s2_loras = get_template_value_from_yaml_file(second_file, second_style)
+    s3_p, s3_n, s3_t, s3_loras = get_template_value_from_yaml_file(third_file, third_style)
+    s4_p, s4_n, s4_t, s4_loras = get_template_value_from_yaml_file(fourth_file, fourth_style)
 
     # Clean placeholders
     for p in (s2_p, s3_p, s4_p):
@@ -118,8 +128,22 @@ def combine_multi(text_positive, text_negative,
         + get_template_format(fourth_file, s4_t)
     )
 
-    return clean_text(total_p), clean_text(total_n), _templates
+    # Combine LoRAs from all templates
+    all_loras = []
+    for lora_list in [base_loras, s2_loras, s3_loras, s4_loras]:
+        if lora_list:
+            all_loras.extend(lora_list)
 
+    # Deduplicate LoRAs by path (last occurrence wins)
+    lora_dict = {}
+    for lora in all_loras:
+        if 'path' in lora:
+            lora_dict[lora['path']] = lora
+
+    # Convert back to a list
+    final_loras = list(lora_dict.values())
+
+    return clean_text(total_p), clean_text(total_n), _templates, final_loras
 
 
 @PromptServer.instance.routes.post('/itools/request_templates_for_file')
@@ -127,7 +151,7 @@ async def respond_to_request_templates_for_file(request):
     post = await request.post()
     file_name = post.get("file_name")
     file_path = os.path.join(project_dir, "styles", file_name)
-    file_path2 = os.path.join(project_dir, "styles","more examples", file_name)
+    file_path2 = os.path.join(project_dir, "styles", "more examples", file_name)
     yaml_data = load_yaml_data(file_path) or load_yaml_data(file_path2)
     templates = read_styles(yaml_data)
     data = {"templates": templates}
