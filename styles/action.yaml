@@ -19,20 +19,29 @@
   negative_prompt: ''
   prompt: ''  
 
-- name: ads-advertising
-  negative_prompt: noisy, blurry, amateurish, sloppy, unattractive
-  prompt: Advertising poster style of {prompt}. Professional, modern, product-focused,
-    commercial, eye-catching, highly detailed
+- name: squatting
+  negative_prompt: ''
+  prompt: The subject is in a squatted position, planted feet solid on the ground.
   loras:
-    - location: 
+    - path: Krea2/action/action_helper.safetensors
       strength: 1.0
 
-- name: ads-automotive
-  negative_prompt: noisy, blurry, unattractive, sloppy, unprofessional
-  prompt: Automotive advertisement style of {prompt}. Sleek, dynamic, professional,
-    commercial, vehicle-focused, high-resolution, highly detailed
+- name: dancing
+  negative_prompt: ''
+  prompt: The subject is dancing, light touch on the ground while turning around and moving her arms and hands in dancing pose.
+  loras:
+    - path: Krea2/action/face_expression.safetensors
+      strength: 1.0
 
-- name: ads-corporate
-  negative_prompt: noisy, blurry, grungy, sloppy, cluttered, disorganized
-  prompt: Corporate branding style of {prompt}. Professional, clean, modern, sleek,
-    minimalist, business-oriented, highly detailed
+- name: dishes
+  negative_prompt: ''
+  prompt: The subject is doing the dishes, soapy water overflows the sink.
+
+- name: painting
+  negative_prompt: ''
+  prompt: The subject is painting an abstract picture, looking concentrated at the model while leaning over towards the ezel holding the painting.
+  loras:
+    - path: Krea2/action/action_helper.safetensors
+      strength: 0.5
+    - path: Krea2/action/face_expression.safetensors
+      strength: 1.5
