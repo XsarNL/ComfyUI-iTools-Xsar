@@ -1,0 +1,35 @@
+# It is recommended not to modify this file,
+# as it serves as the initialization file for the node.
+#
+# Instead, create a copy, place it in the same folder,
+# and the iTools Prompt Styler node will read all your style files from there.
+#
+# Ensure that the formatting is kept the same as in this file.
+# Indents in YAML are critical. Ensure proper indentation, as incorrect spacing can cause errors.
+#
+# Best approach is to copy a block of name, negative_prompt and a prompt and then replace their values
+# Note that your text_positive will be added in this part {prompt}
+# Adding - name: random will allow the node to pick random name from this file
+
+- name: none
+  negative_prompt: ''
+  prompt: ''
+
+- name: random
+  negative_prompt: ''
+  prompt: ''  
+
+- name: ads-advertising
+  negative_prompt: noisy, blurry, amateurish, sloppy, unattractive
+  prompt: Advertising poster style of {prompt}. Professional, modern, product-focused,
+    commercial, eye-catching, highly detailed
+
+- name: ads-automotive
+  negative_prompt: noisy, blurry, unattractive, sloppy, unprofessional
+  prompt: Automotive advertisement style of {prompt}. Sleek, dynamic, professional,
+    commercial, vehicle-focused, high-resolution, highly detailed
+
+- name: ads-corporate
+  negative_prompt: noisy, blurry, grungy, sloppy, cluttered, disorganized
+  prompt: Corporate branding style of {prompt}. Professional, clean, modern, sleek,
+    minimalist, business-oriented, highly detailed
