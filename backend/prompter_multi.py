@@ -4,22 +4,22 @@ from .shared import load_yaml_data, read_styles, clean_text, project_dir
 import os
 import random
 
-file_name_basic = "basic.yaml"
+file_name_basic = "subject.yaml"
 file_path_basic = os.path.join(project_dir, "styles", file_name_basic)
 yaml_data_basic = load_yaml_data(file_path_basic)
 templates_basic = read_styles(yaml_data_basic)
 
-file_name_extra1 = "camera.yaml"
+file_name_extra1 = "clothing.yaml"
 file_path_extra1 = os.path.join(project_dir, "styles", file_name_extra1)
 yaml_data_extra1 = load_yaml_data(file_path_extra1)
 templates_extra1 = read_styles(yaml_data_extra1)
 
-file_name_extra2 = "artist.yaml"
+file_name_extra2 = "action.yaml"
 file_path_extra2 = os.path.join(project_dir, "styles", file_name_extra2)
 yaml_data_extra2 = load_yaml_data(file_path_extra2)
 templates_extra2 = read_styles(yaml_data_extra2)
 
-file_name_extra3 = "mood.yaml"
+file_name_extra3 = "camera.yaml"
 file_path_extra3 = os.path.join(project_dir, "styles", file_name_extra3)
 yaml_data_extra3 = load_yaml_data(file_path_extra3)
 templates_extra3 = read_styles(yaml_data_extra3)
