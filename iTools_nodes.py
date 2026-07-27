@@ -368,13 +368,13 @@ class IToolsPromptStylerExtra:
             "required": {
                 "text_positive": ("STRING", {"default": "", "multiline": True}),
                 "text_negative": ("STRING", {"default": "", "multiline": False}),
-                "base_file": ((styles), {"default": "basic.yaml"}),
+                "base_file": ((styles), {"default": "artist.yaml"}),
                 "base_style": ((templates_basic),),
-                "second_file": ((styles), {"default": "camera.yaml"}),
+                "second_file": ((styles), {"default": "clothing.yaml"}),
                 "second_style": ((templates_extra1),),
-                "third_file": ((styles), {"default": "artist.yaml"}),
+                "third_file": ((styles), {"default": "action.yaml"}),
                 "third_style": ((templates_extra2),),
-                "fourth_file": ((styles), {"default": "mood.yaml"}),
+                "fourth_file": ((styles), {"default": "camera.yaml"}),
                 "fourth_style": ((templates_extra3),),
             },
         }
