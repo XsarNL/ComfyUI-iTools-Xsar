@@ -9,6 +9,11 @@ file_path_basic = os.path.join(project_dir, "styles", file_name_basic)
 yaml_data_basic = load_yaml_data(file_path_basic)
 templates_basic = read_styles(yaml_data_basic)
 
+file_name_expression = "expression.yaml"
+file_path_expression = os.path.join(project_dir, "styles", file_name_expression)
+yaml_data_expression = load_yaml_data(file_path_expression)
+templates_expression = read_styles(yaml_data_expression)
+
 file_name_extra1 = "clothing.yaml"
 file_path_extra1 = os.path.join(project_dir, "styles", file_name_extra1)
 yaml_data_extra1 = load_yaml_data(file_path_extra1)
@@ -82,6 +87,7 @@ def get_template_value_from_yaml_file(file_name, template_name):
 def combine_multi(
     text_positive, text_negative,
     base_file, base_style,
+    expression_file, expression_style,
     second_file, second_style,
     third_file, third_style,
     fourth_file, fourth_style
@@ -100,21 +106,24 @@ def combine_multi(
     else:
         prepend_neg = True
 
+    # Expression templates
+    expr_p, expr_n, expr_t, expr_loras = get_template_value_from_yaml_file(expression_file, expression_style)
+
     # Secondary templates
     s2_p, s2_n, s2_t, s2_loras = get_template_value_from_yaml_file(second_file, second_style)
     s3_p, s3_n, s3_t, s3_loras = get_template_value_from_yaml_file(third_file, third_style)
     s4_p, s4_n, s4_t, s4_loras = get_template_value_from_yaml_file(fourth_file, fourth_style)
 
     # Clean placeholders
-    for p in (s2_p, s3_p, s4_p):
+    for p in (expr_p, s2_p, s3_p, s4_p):
         p.replace("of {prompt}", "").replace("{prompt}", "")
 
-    total_p = f"{base_p},{s2_p},{s3_p},{s4_p}"
+    total_p = f"{base_p},{expr_p},{s2_p},{s3_p},{s4_p}"
 
     if prepend_neg:
-        total_n = f"{text_negative},{base_n},{s2_n},{s3_n},{s4_n}"
+        total_n = f"{text_negative},{base_n},{expr_n},{s2_n},{s3_n},{s4_n}"
     else:
-        total_n = f"{base_n},{s2_n},{s3_n},{s4_n}"
+        total_n = f"{base_n},{expr_n},{s2_n},{s3_n},{s4_n}"
 
     def get_template_format(f, t):
         if t != "none":
@@ -123,6 +132,7 @@ def combine_multi(
 
     _templates = (
         get_template_format(base_file, base_t)
+        + get_template_format(expression_file, expr_t)
         + get_template_format(second_file, s2_t)
         + get_template_format(third_file, s3_t)
         + get_template_format(fourth_file, s4_t)
@@ -130,7 +140,7 @@ def combine_multi(
 
     # Combine LoRAs from all templates
     all_loras = []
-    for lora_list in [base_loras, s2_loras, s3_loras, s4_loras]:
+    for lora_list in [base_loras, expr_loras, s2_loras, s3_loras, s4_loras]:
         if lora_list:
             all_loras.extend(lora_list)
 

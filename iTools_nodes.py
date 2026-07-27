@@ -24,6 +24,7 @@ from .backend.prompter import read_replace_and_combine, templates
 from .backend.prompter_multi import (
     combine_multi,
     templates_basic,
+    templates_expression,
     templates_extra1,
     templates_extra2,
     templates_extra3,
@@ -370,6 +371,8 @@ class IToolsPromptStylerExtra:
                 "text_negative": ("STRING", {"default": "", "multiline": False}),
                 "base_file": ((styles), {"default": "subject.yaml"}),
                 "base_style": ((templates_basic),),
+                "expression_file": ((styles), {"default": "expression.yaml"}),
+                "expression_style": ((templates_expression),),
                 "second_file": ((styles), {"default": "clothing.yaml"}),
                 "second_style": ((templates_extra1),),
                 "third_file": ((styles), {"default": "action.yaml"}),
@@ -380,7 +383,7 @@ class IToolsPromptStylerExtra:
         }
 
     @classmethod
-    def VALIDATE_INPUTS(cls, base_style, second_style, third_style, fourth_style):
+    def VALIDATE_INPUTS(cls, base_style, expression_style, second_style, third_style, fourth_style):
         # YOLO, anything goes!
         return True
 
@@ -389,6 +392,8 @@ class IToolsPromptStylerExtra:
         text_negative,
         base_file,
         base_style,
+        expression_file,
+        expression_style,
         second_file,
         second_style,
         third_file,
@@ -398,6 +403,7 @@ class IToolsPromptStylerExtra:
     ):
         if (
             base_style == "random"
+            or expression_style == "random"
             or second_style == "random"
             or third_style == "random"
             or fourth_style == "random"
@@ -421,6 +427,8 @@ class IToolsPromptStylerExtra:
         text_negative,
         base_file,
         base_style,
+        expression_file,
+        expression_style,
         second_file,
         second_style,
         third_file,
@@ -433,6 +441,8 @@ class IToolsPromptStylerExtra:
             text_negative,
             base_file,
             base_style,
+            expression_file,
+            expression_style,
             second_file,
             second_style,
             third_file,
